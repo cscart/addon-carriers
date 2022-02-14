@@ -6,7 +6,7 @@
     <status>active</status>
     <compatibility>
         <core_version>
-            <min>4.14.1</min>
+            <min>4.13.1</min>
         </core_version>
     </compatibility>
     <settings>
