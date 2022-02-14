@@ -23,7 +23,7 @@ defined('BOOTSTRAP') or die('Access denied');
  */
 function fn_custom_carriers_info()
 {
-    $text = __('general_info');
+    $text = __('custom_carriers.general_info');
 
     return $text . '<hr/>' ;
 }
