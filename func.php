@@ -12,6 +12,8 @@
  * "copyright.txt" FILE PROVIDED WITH THIS DISTRIBUTION PACKAGE.            *
  ****************************************************************************/
 
+use Tygh\Enum\YesNo;
+
 defined('BOOTSTRAP') or die('Access denied');
 
 /**
@@ -21,7 +23,7 @@ defined('BOOTSTRAP') or die('Access denied');
  */
 function fn_custom_carriers_info()
 {
-    $text = __('general_info');
+    $text = __('custom_carriers.general_info');
 
     return $text . '<hr/>' ;
 }
@@ -31,9 +33,9 @@ function fn_custom_carriers_info()
  *
  * @return array<string, array<string, string>> $normalize_carriers Normalize custom carriers
  */
-function fn_get_normalize_carriers()
+function fn_custom_carriers_get_carriers()
 {
-    $carriers = db_get_array('SELECT module, tracking_url FROM ?:shipping_services WHERE is_custom = ?s', '1');
+    $carriers = db_get_array('SELECT module, tracking_url FROM ?:shipping_services WHERE is_custom = ?s', YesNo::YES);
     $normalize_carriers = [];
 
     foreach ($carriers as $carrier_info) {

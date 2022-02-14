@@ -12,7 +12,7 @@ msgctxt "Addons::description::custom_carriers"
 msgid "Add your own carriers and display tracking numbers as links to their websites"
 msgstr "Add your own carriers and display tracking numbers as links to their websites"
 
-msgctxt "Languages::general_info"
+msgctxt "Languages::custom_carriers.general_info"
 msgid "Each custom carrier can have its own tracking URL. Use %s where the tracking number should be. If you specify http://example.com/index.php?tracking=%s and set the tracking number to test, the URL will lead to http://example.com/index.php?tracking=test."
 msgstr "Each custom carrier can have its own tracking URL. Use %s where the tracking number should be. If you specify http://example.com/index.php?tracking=%s and set the tracking number to test, the URL will lead to http://example.com/index.php?tracking=test."
 

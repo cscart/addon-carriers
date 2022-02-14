@@ -21,7 +21,7 @@ defined('BOOTSTRAP') or die('Access denied');
 if ($mode === 'details') {
     /** @var array<string, array<string, string>> $carriers **/
     $carriers = Tygh::$app['view']->getTemplateVars('carriers');
-    $custom_carriers = fn_get_normalize_carriers();
+    $custom_carriers = fn_custom_carriers_get_carriers();
     foreach ($custom_carriers as $carrier_name => $carrier_info) {
         $carriers[$carrier_name] = $carrier_info;
     }

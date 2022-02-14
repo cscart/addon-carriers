@@ -12,6 +12,8 @@
  * "copyright.txt" FILE PROVIDED WITH THIS DISTRIBUTION PACKAGE.            *
  ****************************************************************************/
 
+use Tygh\Enum\ObjectStatuses;
+use Tygh\Enum\YesNo;
 use Tygh\Registry;
 
 defined('BOOTSTRAP') or die('Access denied');
@@ -20,7 +22,11 @@ defined('BOOTSTRAP') or die('Access denied');
  * @var string $mode
  */
 
-if ($mode === 'update') {
+if (
+    $mode === 'update'
+    && $_SERVER['REQUEST_METHOD'] === 'POST'
+    && $_REQUEST['addon'] === 'custom_carriers'
+) {
     $new_carriers = [];
     for ($i = 1; $i <= 3; $i++) {
         $str_i = (string) $i;
@@ -32,7 +38,7 @@ if ($mode === 'update') {
         }
     }
 
-    $old_carriers = fn_get_normalize_carriers();
+    $old_carriers = fn_custom_carriers_get_carriers();
 
     foreach ($old_carriers as $carrier_name => $carrier_info) {
         if (!array_key_exists($carrier_name, $new_carriers)) {
@@ -44,10 +50,10 @@ if ($mode === 'update') {
         $tracking_url = (isset($carrier_info['tracking_url'])) ? $carrier_info['tracking_url'] : '';
         if (!array_key_exists($carrier_name, $old_carriers)) {
             $carrier_data = [
-                'status' => 'A',
+                'status' => ObjectStatuses::ACTIVE,
                 'module' => $carrier_name,
                 'code' => 'default',
-                'is_custom' => '1',
+                'is_custom' => YesNo::YES,
                 'tracking_url' => $tracking_url
             ];
             db_query('INSERT INTO ?:shipping_services ?e', $carrier_data);

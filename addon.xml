@@ -40,7 +40,7 @@
         </sections>
     </settings>
     <queries>
-        <item>ALTER TABLE `?:shipping_services` ADD `is_custom` boolean NOT NULL default '0', ADD `tracking_url` varchar(255) NOT NULL default ''</item>
+        <item>ALTER TABLE `?:shipping_services` ADD `is_custom` char(1) NOT NULL default '0', ADD `tracking_url` varchar(255) NOT NULL default ''</item>
         <item for="uninstall">ALTER TABLE `?:shipping_services` DROP `is_custom`, DROP `tracking_url`</item>
     </queries>
 </addon>
