@@ -15,6 +15,7 @@
 use Tygh\Enum\ObjectStatuses;
 use Tygh\Enum\YesNo;
 use Tygh\Registry;
+use Tygh\Settings;
 
 defined('BOOTSTRAP') or die('Access denied');
 
@@ -30,11 +31,12 @@ if (
     $new_carriers = [];
     for ($i = 1; $i <= 3; $i++) {
         $str_i = (string) $i;
-        $carrier_name = Registry::get('addons.custom_carriers.carrier_name_' . $str_i);
+        $carrier_name = Settings::instance()->getValue('carrier_name_' . $str_i, '');
         if (!empty($carrier_name)) {
             $new_carriers[$carrier_name]['name'] = $carrier_name;
-            $tracking_url = Registry::get('addons.custom_carriers.carrier_url_' . $str_i);
+            $tracking_url = Settings::instance()->getValue('carrier_url_' . $str_i, '');
             $new_carriers[$carrier_name]['tracking_url'] = $tracking_url;
+
         }
     }
 
@@ -42,7 +44,7 @@ if (
 
     foreach ($old_carriers as $carrier_name => $carrier_info) {
         if (!array_key_exists($carrier_name, $new_carriers)) {
-            db_query('DELETE FROM ?:shipping_services WHERE module = ?s', $carrier_name);
+            db_query('DELETE FROM ?:shipping_services WHERE module = ?s AND is_custom = ?s', $carrier_name, YesNo::YES);
         }
     }
 
