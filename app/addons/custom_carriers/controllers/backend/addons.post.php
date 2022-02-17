@@ -12,9 +12,9 @@
  * "copyright.txt" FILE PROVIDED WITH THIS DISTRIBUTION PACKAGE.            *
  ****************************************************************************/
 
+use Tygh\Enum\NotificationSeverity;
 use Tygh\Enum\ObjectStatuses;
 use Tygh\Enum\YesNo;
-use Tygh\Registry;
 use Tygh\Settings;
 
 defined('BOOTSTRAP') or die('Access denied');
@@ -36,11 +36,33 @@ if (
             $new_carriers[$carrier_name]['name'] = $carrier_name;
             $tracking_url = Settings::instance()->getValue('carrier_url_' . $str_i, '');
             $new_carriers[$carrier_name]['tracking_url'] = $tracking_url;
-
+            $new_carriers[$carrier_name]['index_name'] = $str_i;
         }
     }
 
-    $old_carriers = fn_custom_carriers_get_carriers();
+    $not_custom_carriers = fn_custom_carriers_get_carriers(YesNo::NO);
+
+    $is_error = false;
+    foreach ($new_carriers as $carrier_name => $carrier_info) {
+        if (array_key_exists($carrier_name, $not_custom_carriers)) {
+            $carrier_index = (isset($carrier_info['index_name'])) ? $carrier_info['index_name'] : '';
+            Settings::instance()->updateValue('carrier_name_' . $carrier_index, '');
+            $is_error = true;
+            fn_set_notification(
+                NotificationSeverity::ERROR,
+                __('error'),
+                __('custom_carriers.add_carrier_error', [
+                    '[name]' => 'carrier ' . $carrier_index . ' name',
+                    '[value]' => $carrier_name
+                ])
+            );
+        }
+    }
+    if ($is_error) {
+        return;
+    }
+
+    $old_carriers = fn_custom_carriers_get_carriers(YesNo::YES);
 
     foreach ($old_carriers as $carrier_name => $carrier_info) {
         if (!array_key_exists($carrier_name, $new_carriers)) {

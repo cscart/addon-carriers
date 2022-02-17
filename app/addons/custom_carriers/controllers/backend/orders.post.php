@@ -12,6 +12,8 @@
  * "copyright.txt" FILE PROVIDED WITH THIS DISTRIBUTION PACKAGE.            *
  ****************************************************************************/
 
+use Tygh\Enum\YesNo;
+
 defined('BOOTSTRAP') or die('Access denied');
 
 /**
@@ -21,7 +23,7 @@ defined('BOOTSTRAP') or die('Access denied');
 if ($mode === 'details') {
     /** @var array<string, array<string, string>> $carriers **/
     $carriers = Tygh::$app['view']->getTemplateVars('carriers');
-    $custom_carriers = fn_custom_carriers_get_carriers();
+    $custom_carriers = fn_custom_carriers_get_carriers(YesNo::YES);
     foreach ($custom_carriers as $carrier_name => $carrier_info) {
         $carriers[$carrier_name] = $carrier_info;
     }
