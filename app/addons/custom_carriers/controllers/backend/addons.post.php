@@ -33,11 +33,13 @@ if (
         $str_i = (string) $i;
         $carrier_name = Settings::instance()->getValue('carrier_name_' . $str_i, '');
         if (!empty($carrier_name)) {
-            $carrier_name = mb_strtolower($carrier_name);
-            $new_carriers[$carrier_name]['name'] = $carrier_name;
+            $carrier_name = fn_strtolower($carrier_name);
             $tracking_url = Settings::instance()->getValue('carrier_url_' . $str_i, '');
+            $new_carriers[$carrier_name]['name'] = $carrier_name;
             $new_carriers[$carrier_name]['tracking_url'] = $tracking_url;
             $new_carriers[$carrier_name]['index_name'] = $str_i;
+
+            Settings::instance()->updateValue('carrier_name_' . $str_i, $carrier_name);
         }
     }
 
