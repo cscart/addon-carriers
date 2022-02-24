@@ -33,6 +33,7 @@ if (
         $str_i = (string) $i;
         $carrier_name = Settings::instance()->getValue('carrier_name_' . $str_i, '');
         if (!empty($carrier_name)) {
+            $carrier_name = mb_strtolower($carrier_name);
             $new_carriers[$carrier_name]['name'] = $carrier_name;
             $tracking_url = Settings::instance()->getValue('carrier_url_' . $str_i, '');
             $new_carriers[$carrier_name]['tracking_url'] = $tracking_url;
@@ -40,13 +41,14 @@ if (
         }
     }
 
-    $not_custom_carriers = fn_custom_carriers_get_carriers(YesNo::NO);
+    $not_custom_carriers = fn_custom_carriers_get_carriers(false);
 
     $is_error = false;
     foreach ($new_carriers as $carrier_name => $carrier_info) {
         if (array_key_exists($carrier_name, $not_custom_carriers)) {
             $carrier_index = (isset($carrier_info['index_name'])) ? $carrier_info['index_name'] : '';
             Settings::instance()->updateValue('carrier_name_' . $carrier_index, '');
+            Settings::instance()->updateValue('carrier_url_' . $carrier_index, '');
             $is_error = true;
             fn_set_notification(
                 NotificationSeverity::ERROR,
@@ -62,7 +64,7 @@ if (
         return;
     }
 
-    $old_carriers = fn_custom_carriers_get_carriers(YesNo::YES);
+    $old_carriers = fn_custom_carriers_get_carriers();
 
     foreach ($old_carriers as $carrier_name => $carrier_info) {
         if (!array_key_exists($carrier_name, $new_carriers)) {
