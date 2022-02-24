@@ -12,8 +12,6 @@
  * "copyright.txt" FILE PROVIDED WITH THIS DISTRIBUTION PACKAGE.            *
  ****************************************************************************/
 
-use Tygh\Enum\YesNo;
-
 defined('BOOTSTRAP') or die('Access denied');
 
 /**

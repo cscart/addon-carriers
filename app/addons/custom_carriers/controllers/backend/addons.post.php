@@ -49,7 +49,6 @@ if (
             $carrier_index = (isset($carrier_info['index_name'])) ? $carrier_info['index_name'] : '';
             Settings::instance()->updateValue('carrier_name_' . $carrier_index, '');
             Settings::instance()->updateValue('carrier_url_' . $carrier_index, '');
-            $is_error = true;
             fn_set_notification(
                 NotificationSeverity::ERROR,
                 __('error'),
@@ -58,18 +57,19 @@ if (
                     '[value]' => $carrier_name
                 ])
             );
+            $is_error = true;
         }
-    }
-    if ($is_error) {
-        return;
     }
 
     $old_carriers = fn_custom_carriers_get_carriers();
-
     foreach ($old_carriers as $carrier_name => $carrier_info) {
         if (!array_key_exists($carrier_name, $new_carriers)) {
             db_query('DELETE FROM ?:shipping_services WHERE module = ?s AND is_custom = ?s', $carrier_name, YesNo::YES);
         }
+    }
+
+    if ($is_error) {
+        return;
     }
 
     foreach ($new_carriers as $carrier_name => $carrier_info) {
