@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<addon scheme="3.0">
+    <id>custom_carriers</id>
+    <version>1.0</version>
+    <default_language>en</default_language>
+    <status>active</status>
+    <compatibility>
+        <core_version>
+            <min>4.13.1</min>
+        </core_version>
+    </compatibility>
+    <settings>
+        <sections>
+            <section id="general">
+                <items>
+                    <item id="info">
+                        <type>info</type>
+                        <handler>fn_custom_carriers_info</handler>
+                    </item>
+                    <item id="carrier_name_1">
+                        <type>input</type>
+                    </item>
+                    <item id="carrier_url_1">
+                        <type>input</type>
+                    </item>
+                    <item id="carrier_name_2">
+                        <type>input</type>
+                    </item>
+                    <item id="carrier_url_2">
+                        <type>input</type>
+                    </item>
+                    <item id="carrier_name_3">
+                        <type>input</type>
+                    </item>
+                    <item id="carrier_url_3">
+                        <type>input</type>
+                    </item>
+                </items>
+            </section>
+        </sections>
+    </settings>
+    <queries>
+        <item>ALTER TABLE `?:shipping_services` ADD `is_custom` char(1) NOT NULL default 'N', ADD `tracking_url` varchar(255) NOT NULL default ''</item>
+        <item for="uninstall">ALTER TABLE `?:shipping_services` DROP `is_custom`, DROP `tracking_url`</item>
+    </queries>
+</addon>

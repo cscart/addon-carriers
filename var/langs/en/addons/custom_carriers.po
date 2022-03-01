@@ -1,0 +1,45 @@
+msgid ""
+msgstr "Project-Id-Version: tygh\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: English\n"
+"Language: en_US"
+
+msgctxt "Addons::name::custom_carriers"
+msgid "Custom carriers"
+msgstr "Custom carriers"
+
+msgctxt "Addons::description::custom_carriers"
+msgid "Add your own carriers and display tracking numbers as links to their websites"
+msgstr "Add your own carriers and display tracking numbers as links to their websites"
+
+msgctxt "Languages::custom_carriers.general_info"
+msgid "Each custom carrier can have its own tracking URL. Use <b>%s</b> where the tracking number should be. If you specify http://example.com/index.php?tracking=<b>%s</b> and set the tracking number to test, the URL will lead to http://example.com/index.php?tracking=test."
+msgstr "Each custom carrier can have its own tracking URL. Use <b>%s</b> where the tracking number should be. If you specify http://example.com/index.php?tracking=<b>%s</b> and set the tracking number to test, the URL will lead to http://example.com/index.php?tracking=test."
+
+msgctxt "Languages::custom_carriers.add_carrier_error"
+msgid "The [name] '[value]' is already in use in regular carriers"
+msgstr "The [name] '[value]' is already in use in regular carriers"
+
+msgctxt "SettingsOptions::custom_carriers::carrier_name_1"
+msgid "Carrier 1 name"
+msgstr "Carrier 1 name"
+
+msgctxt "SettingsOptions::custom_carriers::carrier_name_2"
+msgid "Carrier 2 name"
+msgstr "Carrier 2 name"
+
+msgctxt "SettingsOptions::custom_carriers::carrier_name_3"
+msgid "Carrier 3 name"
+msgstr "Carrier 3 name"
+
+msgctxt "SettingsOptions::custom_carriers::carrier_url_1"
+msgid "Carrier 1 tracking URL"
+msgstr "Carrier 1 tracking URL"
+
+msgctxt "SettingsOptions::custom_carriers::carrier_url_2"
+msgid "Carrier 2 tracking URL"
+msgstr "Carrier 2 tracking URL"
+
+msgctxt "SettingsOptions::custom_carriers::carrier_url_3"
+msgid "Carrier 3 tracking URL"
+msgstr "Carrier 3 tracking URL"
