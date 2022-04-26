@@ -73,6 +73,7 @@ function fn_custom_carriers_update_shipment_before_send_notification($shipment_d
     if (!empty($shipment_data['carrier']) && $shipment['carrier_info']['tracking_url'] === "") {
         $tracking_url = db_get_field('SELECT tracking_url FROM ?:shipping_services WHERE module = ?s', $shipment_data['carrier']);
         $shipment['carrier_info']['tracking_url'] = sprintf($tracking_url, $shipment_data['tracking_number']);
+        $shipment['carrier_info']['name'] = $shipment_data['carrier'];
     }
 }
 
@@ -91,6 +92,10 @@ function fn_custom_carriers_update_shipment_before_send_notification($shipment_d
  */
 function fn_custom_carriers_get_shipments_info_post(&$shipments, $params)
 {
+    if (empty($shipments)) {
+        return;
+    }
+    
     foreach ($shipments as $id => $shipment) {
         if (!empty($shipment['carrier']) && $shipment['carrier_info']['tracking_url'] === "") {
             $tracking_url = db_get_field('SELECT tracking_url FROM ?:shipping_services WHERE module = ?s', $shipment['carrier']);
