@@ -49,3 +49,57 @@ function fn_custom_carriers_get_carriers($is_custom = true)
 
     return $normalize_carriers;
 }
+
+/**
+ * The "update_shipment_before_send_notification" hook handler.
+ *
+ * Actions performed:
+ *     - Adds tracking url to the custom carrier info to be displayed in the new shipment notification
+ *
+ * @param array $shipment_data      Shipment data
+ * @param int   $shipment_id        Shipment identifier
+ * @param int   $group_key          Cart products group key
+ * @param bool  $all_products       Whether to use all products to create the new shipment
+ * @param array $force_notification Array with notification rules
+ * @param array $order_info         Shipment order information
+ * @param array $shipment           Notification shipment data
+ * 
+ * @see fn_update_shipment()
+ *
+ * @return void
+ */
+function fn_custom_carriers_update_shipment_before_send_notification($shipment_data, $shipment_id, $group_key, $all_products, $force_notification, $order_info, &$shipment)
+{
+    if (!empty($shipment_data['carrier']) && $shipment['carrier_info']['tracking_url'] === "") {
+        $tracking_url = db_get_field('SELECT tracking_url FROM ?:shipping_services WHERE module = ?s', $shipment_data['carrier']);
+        $shipment['carrier_info']['tracking_url'] = sprintf($tracking_url, $shipment_data['tracking_number']);
+        $shipment['carrier_info']['name'] = $shipment_data['carrier'];
+    }
+}
+
+/**
+ * The "get_shipments_info_post" hook handler.
+ *
+ * Actions performed:
+ *     - Adds tracking url to the custom carrier info to be displayed in the "order summary" document
+ *
+ * @param array $shipments Array of shipments
+ * @param array $params    Shipments search params
+ * 
+ * @see fn_get_shipments_info()
+ *
+ * @return void
+ */
+function fn_custom_carriers_get_shipments_info_post(&$shipments, $params)
+{
+    if (empty($shipments)) {
+        return;
+    }
+    
+    foreach ($shipments as $id => $shipment) {
+        if (!empty($shipment['carrier']) && $shipment['carrier_info']['tracking_url'] === "") {
+            $tracking_url = db_get_field('SELECT tracking_url FROM ?:shipping_services WHERE module = ?s', $shipment['carrier']);
+            $shipments[$id]['carrier_info']['tracking_url'] = sprintf($tracking_url, $shipment['tracking_number']);
+        }
+    }
+}
